@@ -1,5 +1,6 @@
 const {body, validationResult} = require('express-validator')
 const {PrismaClient} = require('../generated/prisma')
+const passport = require('../auth/passport')
 const bcrypt = require('bcryptjs')
 
 const prisma = new PrismaClient()
@@ -50,6 +51,33 @@ const signupPost = [
     }
 ]
 
+async function loginPost(req, res, next) {
+    passport.authenticate("local", (err, user, info) => {
+        if(err) return next(err)
+        
+        if(!user) {
+            return res.status(401).json({
+                success: false,
+                message: info?.message || "Invalid credentials"
+            })
+        }
+        req.login(user, (err) => {
+            if(err) return next(err)
+            
+            return res.json({
+                success: true,
+                message: "Login successful!",
+                user: {
+                    id: user.user_id,
+                    email: user.email,
+                    fullname: user.fullname,
+                }
+            })
+        })
+    })(req, res, next);
+}
+
 module.exports = {
-    signupPost
+    signupPost,
+    loginPost
 }
