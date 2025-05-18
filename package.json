@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@prisma/client": "^6.8.2",
     "bcryptjs": "^3.0.2",
     "connect-pg-simple": "^10.0.0",
     "express": "^5.1.0",
@@ -8,5 +9,8 @@
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "prisma": "^6.8.2"
   }
 }
