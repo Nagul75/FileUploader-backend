@@ -1,6 +1,8 @@
 const express = require('express')
 const session = require('express-session')
 const pool = require('./db/pool')
+const passport = require('passport')
+const indexRouter = require('./routers/indexRouter')
 const pgStore = require('connect-pg-simple')(session)
 
 const app = express()
@@ -11,7 +13,9 @@ const sessionStore = new pgStore({
     createTableIfMissing: true
 })
 
+app.use(express.json());
 app.use(express.urlencoded({extended: true}))
+
 app.use(session({
     secret: "cats",
     resave: false,
@@ -21,6 +25,19 @@ app.use(session({
         maxAge: 1000 * 60 * 60 * 24
     }
 }))
+
+app.use(passport.initialize())
+app.use(passport.session())
+
+app.use((req, res, next) => {
+    if(req.user) {
+        res.locals.currentUser = req.user
+        next()
+    }
+    next()
+})
+
+app.use("/", indexRouter)
 
 app.listen(8080, () => {
     console.log("Server on PORT 8080")
