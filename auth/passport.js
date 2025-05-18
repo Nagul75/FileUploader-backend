@@ -5,7 +5,7 @@ const {PrismaClient} = require('../generated/prisma')
 
 const prisma = new PrismaClient()
 
-passport.use(new LocalStrategy(
+passport.use(new LocalStrategy({usernameField: 'email'},
     async (email, password, done) => {
         try {
             const user = await prisma.user.findUnique({
