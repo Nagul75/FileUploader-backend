@@ -34,6 +34,14 @@ const signupPost = [
         }
         try {
             req.body.password = await bcrypt.hash(req.body.password, 10)
+            const alreadyExists = await prisma.user.findUnique({
+                where: {
+                    email: req.body.email
+                }
+            })
+            if(alreadyExists) {
+                throw new Error("Email already exists")
+            }
             const user = await prisma.user.create({
                 data: {
                     fullname: req.body.fullname,
