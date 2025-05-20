@@ -4,6 +4,7 @@ const pool = require('./db/pool')
 const passport = require('passport')
 const indexRouter = require('./routers/indexRouter')
 const pgStore = require('connect-pg-simple')(session)
+const cors = require('cors')
 
 const app = express()
 
@@ -15,6 +16,7 @@ const sessionStore = new pgStore({
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
+app.use(cors())
 
 app.use(session({
     secret: "cats",
