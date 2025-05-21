@@ -3,6 +3,7 @@ const session = require('express-session')
 const pool = require('./db/pool')
 const passport = require('passport')
 const indexRouter = require('./routers/indexRouter')
+const apiRouter = require('./routers/apiRouter')
 const pgStore = require('connect-pg-simple')(session)
 const cors = require('cors')
 
@@ -40,6 +41,7 @@ app.use((req, res, next) => {
 })
 
 app.use("/", indexRouter)
+app.use("/api", apiRouter)
 
 app.listen(8080, () => {
     console.log("Server on PORT 8080")
