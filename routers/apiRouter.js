@@ -7,9 +7,9 @@ const folderController = require('../controllers/folderController')
 
 const apiRouter = Router()
 
-//apiRouter.get("users/:id/folders/:id", folderController.readFolderGET)
-apiRouter.post("/users/:id/folders", folderController.createFolderPOST)
-//apiRouter.delete("users/:id/folders/:id", folderController.deleteFolderDELETE)
-//apiRouter.put("users/:id/folders/:id", folderController.updateFolderPUT)
+apiRouter.get("/users/:user_id/folders/:folder_id", folderController.readFolderGET)
+apiRouter.post("/users/:user_id/folders", folderController.createFolderPOST)
+//apiRouter.delete("users/:user_id/folders/:folder_id", folderController.deleteFolderDELETE)
+//apiRouter.put("users/:user_id/folders/:folder_id", folderController.updateFolderPUT)
 
 module.exports = apiRouter
